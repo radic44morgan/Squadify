@@ -1,5 +1,0 @@
-Spotify Collab Queue
-
-Description - This website will be used to allow users to create a singular queue for Spotify that they can all add to at the same time.  For example, if a group of people were in a room listening to music, they could connect to the website, add songs to the queue, and then listen to them through someones laptop connected to a speaker.  Where as now, one person is in charge of the queue and everyone has to tell them what to queue up.
-
-Design - 
