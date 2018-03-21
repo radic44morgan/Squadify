@@ -5,11 +5,48 @@
  */
 package hello;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 /**
  *
  * @author morganradic
  */
 public class QueueModel
 {
-    
+
+    private String name;
+    private String code;
+    private ArrayList<SongModel> songs;
+    private ArrayList<UserModel> users;
+
+    public QueueModel(UserModel master, String n)
+    {
+        users.add(master);
+        name = n;
+        code = generateCode();
+    }
+
+    public String generateCode()
+    {
+        Random r = new Random();
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < 4; i++)
+        {
+            builder.append((char) (r.nextInt(26) + 'a'));
+        }
+        return builder.toString();
+
+    }
+
+    public void addUser(UserModel user)
+    {
+        users.add(user);
+
+    }
+
+    public String getCode()
+    {
+        return code;
+    }
 }
