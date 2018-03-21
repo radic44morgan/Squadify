@@ -22,16 +22,16 @@ public class TestPackage
         QueueController controller = new QueueController();
         System.out.println("Controller created");
         System.out.println("Creating queue");
-        user1.setQueueCode(controller.createQueue(user1));
+        user1.setQueuecode(controller.createQueue(user1));
         System.out.println("Queue created.");
         System.out.println("Number of queues: " + controller.getQueues().size());
         System.out.println("Creating participate user");
         UserModel user2 = new UserModel("participate");
         System.out.println("Adding user to queue");
-        if (controller.addUserToQueue(user2, user1.getCode()))
+        if (controller.addUserToQueue(user2, user1.getQueuecode()))
         {
             System.out.println("User added");
-            user2.setQueueCode(user1.getCode());
+            user2.setQueuecode(user1.getQueuecode());
         }
         else
             System.out.println("Failed to add user");

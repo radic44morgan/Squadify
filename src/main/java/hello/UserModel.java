@@ -12,21 +12,48 @@ package hello;
 public class UserModel
 {
     private String username;
-    private String queueCode;
+    private String queuecode;
     
     public UserModel(String u)
     {
         username = u;
     }
     
-    public void setQueueCode(String c)
+    public UserModel()
     {
-        queueCode = c;
+        
     }
-    
-    public String getCode()
+
+    /**
+     * @return the username
+     */
+    public String getUsername()
     {
-        return queueCode;
+        return username;
+    }
+
+    /**
+     * @param username the username to set
+     */
+    public void setUsername(String username)
+    {
+        this.username = username;
+    }
+
+    /**
+     * @return the queueCode
+     */
+    public String getQueuecode()
+    {
+        return queuecode;
+    }
+
+    /**
+     * @param queueCode the queueCode to set
+     */
+    public void setQueuecode(String queueCode)
+    {
+        this.queuecode = queueCode;
     }
     
 }

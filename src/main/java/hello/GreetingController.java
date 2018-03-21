@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class GreetingController {
 
     
-    @GetMapping("/address")
-    public String addressForm(Model model) {
-        
-        return "address";
+    @GetMapping("/u")
+    public String userForm(Model model) {
+        model.addAttribute("user", new UserModel());
+        return "user";
     }
 
 
