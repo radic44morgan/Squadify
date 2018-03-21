@@ -22,6 +22,7 @@ public class QueueModel
 
     public QueueModel(UserModel master, String n)
     {
+        users = new ArrayList<UserModel>();
         users.add(master);
         name = n;
         code = generateCode();
@@ -43,6 +44,11 @@ public class QueueModel
     {
         users.add(user);
 
+    }
+    
+    public void addSong(SongModel song)
+    {
+        songs.add(song);
     }
 
     public String getCode()

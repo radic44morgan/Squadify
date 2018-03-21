@@ -11,5 +11,22 @@ package hello;
  */
 public class UserModel
 {
+    private String username;
+    private String queueCode;
+    
+    public UserModel(String u)
+    {
+        username = u;
+    }
+    
+    public void setQueueCode(String c)
+    {
+        queueCode = c;
+    }
+    
+    public String getCode()
+    {
+        return queueCode;
+    }
     
 }

@@ -9,11 +9,13 @@ package hello;
  *
  * @author morganradic
  */
-public class SongModel
+public class MasterUserModel extends UserModel
 {
-    private String name;
-    private String artist;
-    private UserModel userAdded;
+    private SpotifyController spotify;
     
-    //playback method
+    public MasterUserModel(String u)
+    {
+        super(u);
+        //spotify = new SpotifyController();
+    }
 }

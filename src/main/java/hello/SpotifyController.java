@@ -22,10 +22,10 @@ public class SpotifyController
     
     public SpotifyController()
     {
-       spotifyapi = new SpotifyApi.Builder().setAccessToken(retrieveAccessToken()).build();
+        
     }
     
-    public String retrieveAccessToken()
+    public String generateAuthView()
     {
         String accessToken = "";
         String urlbuild = "https://accounts.spotify.com/authorize/?client_id="+CLIENT_ID+"&response_type=code&redirect_uri="+REDIRECT_ID;
@@ -52,4 +52,11 @@ public class SpotifyController
         
         return accessToken;
     }
+    
+    public void setAuth(String authToken)
+    {
+      spotifyapi = new SpotifyApi.Builder().setAccessToken(authToken).build();
+    }
+   
+                    
 }
