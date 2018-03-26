@@ -28,6 +28,11 @@ public class QueueController
         return holder.getCode();
     }
     
+    public void addQueue(QueueModel queue)
+    {
+        queues.put(queue.getCode(), queue);
+    }
+    
     public boolean addUserToQueue(UserModel user, String code)
     {
         if (queues.containsKey(code))

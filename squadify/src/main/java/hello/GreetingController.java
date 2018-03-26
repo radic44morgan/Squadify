@@ -32,6 +32,22 @@ public class GreetingController {
             return "failure";
         }
     }
+    
+    @GetMapping("/create")
+    public String createForm(Model model) 
+    {
+        model.addAttribute("queuemodel", new QueueModel());
+        return "create";
+    }
+    
+    @PostMapping("/create")
+    public String createSubmit(@ModelAttribute QueueModel queuemodel, Model model)
+    {
+        controller.addQueue(queuemodel);
+        model.addAttribute("code", queuemodel.getCode());
+        model.addAttribute("name", queuemodel.getName());
+        return "queue_created";
+    }
 
 
 }

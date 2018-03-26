@@ -27,7 +27,19 @@ public class QueueModel
         name = n;
         code = generateCode();
     }
+    
+    public QueueModel(String n)
+    {
+        name = n;
+        users = new ArrayList<UserModel>();
+        code = generateCode();
+    }
 
+    public QueueModel()
+    {
+        code = generateCode();
+    }
+    
     public String generateCode()
     {
         Random r = new Random();
@@ -54,5 +66,10 @@ public class QueueModel
     public String getCode()
     {
         return code;
+    }
+    
+    public String getName()
+    {
+        return name;
     }
 }
