@@ -37,6 +37,7 @@ public class QueueModel
 
     public QueueModel()
     {
+        users = new ArrayList<UserModel>();
         code = generateCode();
     }
     
@@ -58,6 +59,11 @@ public class QueueModel
 
     }
     
+    public int getUserSize()
+    {
+        return users.size();
+    }
+    
     public void addSong(SongModel song)
     {
         songs.add(song);
@@ -71,5 +77,10 @@ public class QueueModel
     public String getName()
     {
         return name;
+    }
+    
+    public void setName(String name)
+    {
+        this.name = name;
     }
 }
