@@ -4,12 +4,14 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -35,9 +37,14 @@ public class GreetingController {
         temp.setQueuecode(usermodel.getQueuecode());
         if (controller.addUserToQueue(temp, usermodel.getQueuecode()))
         {
+            model.addAttribute("song", new SongModel());
+            Map<String, SongModel> songs = new LinkedHashMap<String,SongModel>();
+            songs.put("Vizine", new SongModel("Vizine","Lil Wayne"));
             model.addAttribute("queuename", controller.getQueues().get(temp.getQueuecode()).getName());
-            model.addAttribute("size", controller.getQueues().get(temp.getQueuecode()).getUserSize());
-            return "success";
+            model.addAttribute("queuecode", temp.getQueuecode());
+            model.addAttribute("list",controller.getQueues().get(temp.getQueuecode()).getSongs());
+            model.addAttribute("songs", songs);
+            return "queuestatus";
         }
         else
         {
@@ -55,11 +62,22 @@ public class GreetingController {
     @PostMapping("/create")
     public String createSubmit(@ModelAttribute QueueModel queuemodel, Model model)
     {
-        System.out.println("HERE: " + queuemodel.getName()); // name is NULL
         controller.addQueue(queuemodel);
         model.addAttribute("code", queuemodel.getCode());
         model.addAttribute("name", queuemodel.getName());
         return "queue_created";
+    }
+    
+    @RequestMapping("/addsong/{code}")
+    public String songSubmit(@PathVariable(value="code") String code ,@ModelAttribute SongModel songmodel, Model model)
+    {
+        controller.getQueues().get(code).addSong(new SongModel("Vizine","Lil Wayne"));
+//        model.addAttribute("code", queuemodel.getCode());
+//        model.addAttribute("name", queuemodel.getName());
+        model.addAttribute("queuename", controller.getQueues().get(code).getName());
+        model.addAttribute("queuecode", code);
+        model.addAttribute("list",controller.getQueues().get(code).getSongs());
+        return "queuestatus";
     }
 
     @RequestMapping("/spotify_login")

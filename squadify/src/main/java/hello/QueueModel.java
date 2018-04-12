@@ -25,20 +25,32 @@ public class QueueModel
         users = new ArrayList<UserModel>();
         users.add(master);
         name = n;
-        code = generateCode();
+        //code = generateCode();
+        code = "a";
+        songs = new ArrayList<SongModel>();
+        SongModel song = new SongModel("Green Eyes","Wavves");
+        songs.add(song);
     }
     
     public QueueModel(String n)
     {
         name = n;
         users = new ArrayList<UserModel>();
-        code = generateCode();
+        //code = generateCode();
+        code = "a";
+        songs = new ArrayList<SongModel>();
+        SongModel song = new SongModel("Green Eyes","Wavves");
+        songs.add(song);
     }
 
     public QueueModel()
     {
         users = new ArrayList<UserModel>();
-        code = generateCode();
+        //code = generateCode();
+        code = "a";
+        songs = new ArrayList<SongModel>();
+        SongModel song = new SongModel("Green Eyes","Wavves");
+        songs.add(song);
     }
     
     public String generateCode()
@@ -68,6 +80,11 @@ public class QueueModel
     {
         songs.add(song);
     }
+    
+    public void removeSong(SongModel song)
+    {
+        songs.remove(song);
+    }
 
     public String getCode()
     {
@@ -77,6 +94,11 @@ public class QueueModel
     public String getName()
     {
         return name;
+    }
+    
+    public ArrayList<SongModel> getSongs()
+    {
+        return songs;
     }
     
     public void setName(String name)
