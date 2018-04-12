@@ -34,18 +34,21 @@
                 <td th:text="${songmodel.artist}" />
             </tr>
         </table>
-            <form action="#" th:action="@{'/addsong/'+${queuecode}}" th:object="${song}" method="post">
-		<p>Name: <input type="text" th:field="*{name}" /></p>
-                <p>Artist: <input type="text" th:field="*{artist}" /></p>		
-<!--				<td><form:select path="name">
-					  <form:option value="NONE" label="--- Pick Song to Add ---" />
-					  <form:options items="'Testing" />
-				       </form:select>
-                                </td>
-				<td><form:errors path="song" cssClass="error" /></td>-->
-			
-				<td colspan="3"><input type="submit" value='Add Song' /></td>
-			
-	</form:form>
+        <form action="#" th:action="@{'/addsong/'+${queuecode}}" th:object="${songmodel}" method="post">
+            <p>Name: <input type="text" th:field="*{name}" /></p>
+            <p>Artist: <input type="text" th:field="*{artist}" /></p>		
+            <!--				<td><form:select path="name">
+                                                      <form:option value="NONE" label="--- Pick Song to Add ---" />
+                                                      <form:options items="'Testing" />
+                                                   </form:select>
+                                            </td>
+                                            <td><form:errors path="song" cssClass="error" /></td>-->
+
+            <td colspan="3"><input type="submit" value='Add Song' /></td>
+
+        </form:form>
+        <div>
+            <button th:action="@{'/queue/'+${queuecode}}">Refresh</button>
+        </div>
 </body>
 </html>

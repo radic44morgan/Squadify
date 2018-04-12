@@ -16,18 +16,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class GreetingController {
+public class GreetingController
+{
 
     private QueueController controller = new QueueController();
     private ArrayList<UserModel> users = new ArrayList<UserModel>();
     private SpotifyController sc = new SpotifyController();
-    
+
     @GetMapping("/login")
-    public String loginForm(Model model) {
+    public String loginForm(Model model)
+    {
         model.addAttribute("usermodel", new UserModel());
         return "login";
     }
-    
+
     @PostMapping("/login")
     public String loginSubmit(@ModelAttribute UserModel usermodel, Model model)
     {
@@ -37,28 +39,27 @@ public class GreetingController {
         temp.setQueuecode(usermodel.getQueuecode());
         if (controller.addUserToQueue(temp, usermodel.getQueuecode()))
         {
-            model.addAttribute("song", new SongModel());
-            Map<String, SongModel> songs = new LinkedHashMap<String,SongModel>();
-            songs.put("Vizine", new SongModel("Vizine","Lil Wayne"));
+            model.addAttribute("songmodel", new SongModel());
+            Map<String, SongModel> songs = new LinkedHashMap<String, SongModel>();
+            songs.put("Vizine", new SongModel("Vizine", "Lil Wayne"));
             model.addAttribute("queuename", controller.getQueues().get(temp.getQueuecode()).getName());
             model.addAttribute("queuecode", temp.getQueuecode());
-            model.addAttribute("list",controller.getQueues().get(temp.getQueuecode()).getSongs());
+            model.addAttribute("list", controller.getQueues().get(temp.getQueuecode()).getSongs());
             model.addAttribute("songs", songs);
             return "queuestatus";
-        }
-        else
+        } else
         {
             return "failure";
         }
     }
-    
+
     @GetMapping("/create")
-    public String createForm(Model model) 
+    public String createForm(Model model)
     {
         model.addAttribute("queuemodel", new QueueModel());
         return "create";
     }
-    
+
     @PostMapping("/create")
     public String createSubmit(@ModelAttribute QueueModel queuemodel, Model model)
     {
@@ -67,16 +68,25 @@ public class GreetingController {
         model.addAttribute("name", queuemodel.getName());
         return "queue_created";
     }
-    
-    @RequestMapping("/addsong/{code}")
-    public String songSubmit(@PathVariable(value="code") String code ,@ModelAttribute SongModel songmodel, Model model)
+
+    @PostMapping("/addsong/{code}")
+    public String songSubmit(@PathVariable(value = "code") String code, @ModelAttribute SongModel songmodel, Model model)
     {
-        controller.getQueues().get(code).addSong(new SongModel("Vizine","Lil Wayne"));
+        controller.getQueues().get(code).addSong(songmodel);
 //        model.addAttribute("code", queuemodel.getCode());
 //        model.addAttribute("name", queuemodel.getName());
         model.addAttribute("queuename", controller.getQueues().get(code).getName());
         model.addAttribute("queuecode", code);
-        model.addAttribute("list",controller.getQueues().get(code).getSongs());
+        model.addAttribute("list", controller.getQueues().get(code).getSongs());
+        return "queuestatus";
+    }
+    
+    @GetMapping("/queue/{code}")
+    public String queueStatus(Model model, @PathVariable(value = "code") String code)
+    {
+        model.addAttribute("queuename", controller.getQueues().get(code).getName());
+        model.addAttribute("queuecode", code);
+        model.addAttribute("list", controller.getQueues().get(code).getSongs());
         return "queuestatus";
     }
 
@@ -90,18 +100,23 @@ public class GreetingController {
             BufferedWriter bw = new BufferedWriter(writer);
             bw.write(sc.generateAuthView());
             bw.close();
-        }
-        catch(IOException ex)
+        } catch (IOException ex)
         {
             System.out.println("HEY ERROR: " + ex.getMessage());
         }
         return "spotify_login";
     }
-    
+
     @RequestMapping("/en/login")
     public String returnLogin()
     {
         return "spotify_login";
+    }
+
+    @ModelAttribute("songmodel")
+    public SongModel createModel()
+    {
+        return new SongModel();
     }
 
 }
