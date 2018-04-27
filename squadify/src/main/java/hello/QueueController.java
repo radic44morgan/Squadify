@@ -21,12 +21,6 @@ public class QueueController
         queues = new HashMap<String, QueueModel>();
     }
     
-    public String createQueue(UserModel master)
-    {
-        QueueModel holder = new QueueModel(master, "Test Queue");
-        queues.put(holder.getCode(), holder);
-        return holder.getCode();
-    }
     
     public void addQueue(QueueModel queue)
     {
@@ -42,9 +36,9 @@ public class QueueController
         return true;
     }
     
-    public void addSong(SongModel song, String code)
+    public void addSong(SongModel song, String code, YoutubeController yc)
     {
-        queues.get(code).addSong(song);
+        queues.get(code).addSong(yc, song);
     }
     
     public Map<String, QueueModel> getQueues()

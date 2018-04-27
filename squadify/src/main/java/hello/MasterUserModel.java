@@ -11,7 +11,7 @@ package hello;
  */
 public class MasterUserModel extends UserModel
 {
-    private SpotifyController spotify;
+    //private SpotifyController spotify;
     
     public MasterUserModel(String u)
     {

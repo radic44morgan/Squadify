@@ -5,6 +5,8 @@
  */
 package hello;
 
+import java.io.IOException;
+
 /**
  *
  * @author morganradic
@@ -12,29 +14,16 @@ package hello;
 public class TestPackage
 {
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws IOException
     {
-
-        System.out.println("Creating master user");
-        MasterUserModel user1 = new MasterUserModel("testuser");
-        System.out.println("User created");
-        System.out.println("Creating QueueController");
-        QueueController controller = new QueueController();
-        System.out.println("Controller created");
-        System.out.println("Creating queue");
-        user1.setQueuecode(controller.createQueue(user1));
-        System.out.println("Queue created.");
-        System.out.println("Number of queues: " + controller.getQueues().size());
-        System.out.println("Creating participate user");
-        UserModel user2 = new UserModel("participate");
-        System.out.println("Adding user to queue");
-        if (controller.addUserToQueue(user2, user1.getQueuecode()))
-        {
-            System.out.println("User added");
-            user2.setQueuecode(user1.getQueuecode());
-        }
-        else
-            System.out.println("Failed to add user");
+        YoutubeController controller = new YoutubeController();
+        System.out.println("Testing: searching for ID for 'The Last Text Message'");
+        String output = controller.findID("The Last Text Message").get(0);
+        System.out.println("Output: " + output);
+        System.out.println("Testing: Playlist creation: ");
+        String id = controller.createPlaylist("Test Playlist");
+        System.out.println("Playlist created. Adding song.");
+        controller.insertPlaylistItem(id, output);
     }
 
 }

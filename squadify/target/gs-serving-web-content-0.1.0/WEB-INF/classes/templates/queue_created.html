@@ -1,0 +1,12 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Queue Created</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Queue Created</h1>
+    <p th:text="'Your queue ' + ${name} + ' has been created! Your code is: ' + ${code}" />
+    <a href="/login">Login to Queue</a>
+</body>
+</html>

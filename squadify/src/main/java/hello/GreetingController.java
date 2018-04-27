@@ -21,7 +21,7 @@ public class GreetingController
 
     private QueueController controller = new QueueController();
     private ArrayList<UserModel> users = new ArrayList<UserModel>();
-    private SpotifyController sc = new SpotifyController();
+    private YoutubeController yc = new YoutubeController();
 
     @GetMapping("/login")
     public String loginForm(Model model)
@@ -41,11 +41,12 @@ public class GreetingController
         {
             model.addAttribute("songmodel", new SongModel());
             Map<String, SongModel> songs = new LinkedHashMap<String, SongModel>();
-            songs.put("Vizine", new SongModel("Vizine", "Lil Wayne"));
+            songs.put("Vizine", new SongModel("Vizine Lil Wayne", yc.findURL("Vizine Lil Wayne")));
             model.addAttribute("queuename", controller.getQueues().get(temp.getQueuecode()).getName());
             model.addAttribute("queuecode", temp.getQueuecode());
             model.addAttribute("list", controller.getQueues().get(temp.getQueuecode()).getSongs());
             model.addAttribute("songs", songs);
+            model.addAttribute("url", controller.getQueues().get(temp.getQueuecode()).getUrl());
             return "queuestatus";
         } else
         {
@@ -63,6 +64,7 @@ public class GreetingController
     @PostMapping("/create")
     public String createSubmit(@ModelAttribute QueueModel queuemodel, Model model)
     {
+        queuemodel.setPlaylistID(yc.createPlaylist(queuemodel.getName()));
         controller.addQueue(queuemodel);
         model.addAttribute("code", queuemodel.getCode());
         model.addAttribute("name", queuemodel.getName());
@@ -72,12 +74,13 @@ public class GreetingController
     @PostMapping("/addsong/{code}")
     public String songSubmit(@PathVariable(value = "code") String code, @ModelAttribute SongModel songmodel, Model model)
     {
-        controller.getQueues().get(code).addSong(songmodel);
-//        model.addAttribute("code", queuemodel.getCode());
-//        model.addAttribute("name", queuemodel.getName());
+        songmodel.setUrl(yc.findID(songmodel.getName()).get(0));
+        songmodel.setName(yc.findID(songmodel.getName()).get(1));
+        controller.getQueues().get(code).addSong(yc, songmodel);
         model.addAttribute("queuename", controller.getQueues().get(code).getName());
         model.addAttribute("queuecode", code);
         model.addAttribute("list", controller.getQueues().get(code).getSongs());
+        model.addAttribute("url", controller.getQueues().get(code).getUrl());
         return "queuestatus";
     }
     
@@ -87,31 +90,10 @@ public class GreetingController
         model.addAttribute("queuename", controller.getQueues().get(code).getName());
         model.addAttribute("queuecode", code);
         model.addAttribute("list", controller.getQueues().get(code).getSongs());
+        model.addAttribute("url", controller.getQueues().get(code).getUrl());
         return "queuestatus";
     }
 
-    @RequestMapping("/spotify_login")
-    public String spotifyLogin(Model model)
-    {
-        File spotifyLoginFile = new File("src/main/resources/templates/spotify_login.html");
-        try
-        {
-            FileWriter writer = new FileWriter(spotifyLoginFile);
-            BufferedWriter bw = new BufferedWriter(writer);
-            bw.write(sc.generateAuthView());
-            bw.close();
-        } catch (IOException ex)
-        {
-            System.out.println("HEY ERROR: " + ex.getMessage());
-        }
-        return "spotify_login";
-    }
-
-    @RequestMapping("/en/login")
-    public String returnLogin()
-    {
-        return "spotify_login";
-    }
 
     @ModelAttribute("songmodel")
     public SongModel createModel()

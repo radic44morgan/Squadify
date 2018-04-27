@@ -5,8 +5,11 @@
  */
 package hello;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -17,11 +20,14 @@ public class QueueModel
 
     private String name;
     private String code;
+    private String playlistID;
+    private String url;
     private ArrayList<SongModel> songs;
     private ArrayList<UserModel> users;
 
-    public QueueModel(UserModel master, String n)
+    public QueueModel(UserModel master, String n, String p)
     {
+        playlistID = p;
         users = new ArrayList<UserModel>();
         users.add(master);
         name = n;
@@ -55,6 +61,11 @@ public class QueueModel
         return builder.toString();
 
     }
+    
+    public String generateURL()
+    {
+        return "https://www.youtube.com/playlist?list=" + playlistID;
+    }
 
     public void addUser(UserModel user)
     {
@@ -67,9 +78,16 @@ public class QueueModel
         return users.size();
     }
     
-    public void addSong(SongModel song)
+    public void addSong(YoutubeController yc, SongModel song)
     {
         songs.add(song);
+        try
+        {
+            yc.insertPlaylistItem(playlistID, song.getUrl());
+        } catch (Exception ex)
+        {
+            System.out.println(ex.getMessage());        
+        }
     }
     
     public void removeSong(SongModel song)
@@ -95,5 +113,38 @@ public class QueueModel
     public void setName(String name)
     {
         this.name = name;
+    }
+
+    /**
+     * @return the playlistID
+     */
+    public String getPlaylistID()
+    {
+        return playlistID;
+    }
+
+    /**
+     * @param playlistID the playlistID to set
+     */
+    public void setPlaylistID(String playlistID)
+    {
+        this.playlistID = playlistID;
+        url = generateURL();
+    }
+
+    /**
+     * @return the url
+     */
+    public String getUrl()
+    {
+        return url;
+    }
+
+    /**
+     * @param url the url to set
+     */
+    public void setUrl(String url)
+    {
+        this.url = url;
     }
 }

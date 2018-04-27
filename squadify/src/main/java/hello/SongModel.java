@@ -12,14 +12,12 @@ package hello;
 public class SongModel
 {
     private String name;
-    private String artist;
-    private String filename;
-    private UserModel userAdded;
+    private String url;
     
-    public SongModel(String n, String a)
+    public SongModel(String n, String u)
     {
         name = n;
-        artist = a;
+        url = u;
     }
     
     public SongModel(String n)
@@ -32,8 +30,6 @@ public class SongModel
         
     }
     
-    
-    //playback method
 
     /**
      * @return the name
@@ -43,29 +39,8 @@ public class SongModel
         return name;
     }
 
-    /**
-     * @return the artist
-     */
-    public String getArtist()
-    {
-        return artist;
-    }
 
-    /**
-     * @return the filename
-     */
-    public String getFilename()
-    {
-        return filename;
-    }
-
-    /**
-     * @return the userAdded
-     */
-    public UserModel getUserAdded()
-    {
-        return userAdded;
-    }
+    
 
     /**
      * @param name the name to set
@@ -75,11 +50,20 @@ public class SongModel
         this.name = name;
     }
 
+
     /**
-     * @param artist the artist to set
+     * @return the url
      */
-    public void setArtist(String artist)
+    public String getUrl()
     {
-        this.artist = artist;
+        return url;
+    }
+
+    /**
+     * @param url the url to set
+     */
+    public void setUrl(String url)
+    {
+        this.url = url;
     }
 }

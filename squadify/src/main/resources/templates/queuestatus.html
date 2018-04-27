@@ -24,19 +24,17 @@
     <body>
         <h1 th:text="${queuename}" />
         <h3 th:text="'Code: ' + ${queuecode}"/>
+        <a th:text ="'Link'" th:href ='${url}'/>
         <table>
             <tr>
                 <th>Song</th>
-                <th>Artist</th>
             </tr>
             <tr th:each="songmodel: ${list}">
                 <td th:text="${songmodel.name}" />
-                <td th:text="${songmodel.artist}" />
             </tr>
         </table>
         <form action="#" th:action="@{'/addsong/'+${queuecode}}" th:object="${songmodel}" method="post">
-            <p>Name: <input type="text" th:field="*{name}" /></p>
-            <p>Artist: <input type="text" th:field="*{artist}" /></p>		
+            <p>Name: <input type="text" th:field="*{name}" /></p>		
             <!--				<td><form:select path="name">
                                                       <form:option value="NONE" label="--- Pick Song to Add ---" />
                                                       <form:options items="'Testing" />
@@ -47,8 +45,5 @@
             <td colspan="3"><input type="submit" value='Add Song' /></td>
 
         </form:form>
-        <div>
-            <button th:action="@{'/queue/'+${queuecode}}">Refresh</button>
-        </div>
 </body>
 </html>
